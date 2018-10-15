@@ -1,0 +1,11 @@
+{
+  "development": {
+    "connection": "mongodb://localhost:27017/event_storming_development"
+  },
+  "test": {
+    "connection": "mongodb://localhost:27017/event_storming_test"
+  },
+  "production": {
+    "connection": "mongodb://localhost:27017/event_storming_production"
+  }
+}

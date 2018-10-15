@@ -1,0 +1,24 @@
+{
+  "name": "backend",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "devstart": "nodemon ./bin/www",
+    "test": "mocha -w --require=test/setup.js test/**"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "~4.16.0",
+    "mongoose": "^5.3.3",
+    "morgan": "~1.9.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.0",
+    "debug": "~2.6.9",
+    "mocha": "^5.2.0",
+    "mongoose-seed": "^0.5.1",
+    "nodemon": "^1.18.4"
+  }
+}
