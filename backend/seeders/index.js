@@ -44,8 +44,13 @@ var data = [
                 ypos: 100
             },
             {
-                name: 'loan defaulted',
+                name: 'loan paid out',
                 xpos: 400,
+                ypos: 100
+            },
+            {
+                name: 'loan defaulted',
+                xpos: 550,
                 ypos: 100
             }
         ]

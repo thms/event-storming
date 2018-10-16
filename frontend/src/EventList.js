@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Layer, Text } from 'react-konva';
-import Konva from 'konva';
 import axios from 'axios';
 import Event from './Event';
 
-class EventList extends React.Component {
+class EventList extends Component {
 
   constructor(props) {
     super(props)
@@ -22,11 +21,11 @@ class EventList extends React.Component {
     })
   }
 
-  addEvent = (e) => {
+  addEvent = (e, x = 100, y = 100) => {
     axios.post('http://localhost:3000/events', {
         name: 'new event',
-        xpos: 100,
-        ypos: 100
+        xpos: x,
+        ypos: y
     },
     { crossdomain: true }
   ).then(res => {
@@ -34,8 +33,13 @@ class EventList extends React.Component {
   })
   }
 
+  deleteEvent = (eventId) => {
+    axios.delete(`http://localhost:3000/events/${eventId}`);
+    let remainingEvents = this.state.events.filter((event) => event._id != eventId )
+    this.setState({events: remainingEvents})
+  }
+
   render() {
-    //console.log(this.state)
     return (
       <Layer>
       <Text text='hello to event storming'/>
@@ -47,7 +51,7 @@ class EventList extends React.Component {
         text='add event'
         onClick={this.addEvent}
       />
-      { this.state.events.map(event => <Event { ...event} />) }
+      { this.state.events.map(event => <Event key={event._id} event={event} deleteEvent={this.deleteEvent} />) }
       </Layer>
       );
   }

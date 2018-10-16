@@ -1,29 +1,26 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Rect, Text, Group } from 'react-konva';
-import Konva from 'konva';
 import axios from 'axios';
 import Portal from './Portal';
 
-class Event extends React.Component {
+class Event extends Component {
 
   constructor(props) {
     super(props)
-    console.log(props)
     this.state = {
       color: 'yellow',
-      x: props.xpos,
-      y: props.ypos,
-      name: props.name,
+      x: props.event.xpos,
+      y: props.event.ypos,
+      name: props.event.name,
       width: 100,
       height: 100,
-      id: props._id,
+      id: props.event._id,
       textEditVisible: false,
       textEditX: 0,
       textEditY: 0,
       textEditRef: React.createRef(),
-      deleted: false
-
+      deleteEvent: props.deleteEvent
     }
   }
   // at the end of dragging, update server side with the new coordinates
@@ -37,23 +34,21 @@ class Event extends React.Component {
     { crossdomain: true }
   )}
 
-  // TODO: remove this element from the state of the EventList, instead of crazy current solution
   handleDelete = e => {
-    axios.delete(`http://localhost:3000/events/${this.state.id}`)
-    .then(res => this.setState({
-      deleted: true
-    })
-    )
+    this.state.deleteEvent(this.state.id)
   };
+
   handleTextDblClick = e => {
-  const absPos = e.target.getAbsolutePosition();
-  this.setState({
-    textEditVisible: true,
-    textEditX: absPos.x,
-    textEditY: absPos.y + 35
-  });
-  this.state.textEditRef.current.focus();
-};
+    e.cancelBubble=true;
+    const absPos = e.target.getAbsolutePosition();
+    this.setState({
+      textEditVisible: true,
+      textEditX: absPos.x,
+      textEditY: absPos.y + 35
+    });
+    this.state.textEditRef.current.focus();
+  };
+
 handleTextEdit = e => {
   axios.put(`http://localhost:3000/events/${this.state.id}`,
     {
@@ -74,9 +69,6 @@ handleTextareaKeyDown = e => {
 };
 
   render() {
-    if (this.state.deleted) {
-      return(null)
-    } else {
     return (
       <Group
         draggable={true}
@@ -131,7 +123,6 @@ handleTextareaKeyDown = e => {
         </Portal>
       </Group>
     );
-  }
   }
 }
 
