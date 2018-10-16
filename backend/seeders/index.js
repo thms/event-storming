@@ -34,14 +34,19 @@ var data = [
         model: 'Event',
         documents: [
             {
-                name: 'loan-submitted',
-                xpos: 10,
-                ypos: 10
+                name: 'loan submitted',
+                xpos: 100,
+                ypos: 100
             },
             {
-                name: 'loan-approved',
-                xpos: 30,
-                ypos: 10
+                name: 'loan approved',
+                xpos: 250,
+                ypos: 100
+            },
+            {
+                name: 'loan defaulted',
+                xpos: 400,
+                ypos: 100
             }
         ]
     },
@@ -50,13 +55,13 @@ var data = [
     documents: [
       {
         name:'score loan',
-        xpos: 10,
-        ypos: 10
+        xpos: 100,
+        ypos: 300
       },
       {
         name: 'payout loan',
-        xpos: 40,
-        ypos: 10
+        xpos: 400,
+        ypos: 300
       }
     ]
   }
