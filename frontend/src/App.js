@@ -55,6 +55,7 @@ class App extends Component {
         x={this.state.stageX}
         y={this.state.stageY}
         onDblClick={this.handleStageDblClick}
+        draggable={true}
         >
           <EventList ref={this.eventListRef}/>
       </Stage>
