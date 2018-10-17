@@ -42,7 +42,6 @@ class EventList extends Component {
   render() {
     return (
       <Layer>
-      <Text text='hello to event storming'/>
       <Text
         x={20}
         y={40}
