@@ -18,6 +18,7 @@ import { mainListItems, secondaryListItems } from './listItems';
 import SimpleLineChart from './SimpleLineChart';
 import SimpleTable from './SimpleTable';
 import Canvas from './Canvas';
+import Editor from './Editor';
 
 const drawerWidth = 240;
 
@@ -101,6 +102,7 @@ const styles = theme => ({
 class Dashboard extends React.Component {
   state = {
     open: true,
+    textEditorRef: React.createRef()
   };
 
   handleDrawerOpen = () => {
@@ -173,7 +175,8 @@ class Dashboard extends React.Component {
               Events
             </Typography>
             <Typography component="div" className={classes.chartContainer}>
-              <Canvas />
+              <Editor ref={this.state.textEditorRef}/>
+              <Canvas textEditorRef={this.state.textEditorRef}/>
             </Typography>
 
           </main>

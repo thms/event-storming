@@ -12,7 +12,8 @@ class Canvas extends React.Component {
     this.state = {
       stageScale: 1,
       stageX: 0,
-      stageY: 0
+      stageY: 0,
+      textEditorRef: props.textEditorRef
     };
   }
 
@@ -58,7 +59,7 @@ render() {
       onDblClick={this.handleStageDblClick}
       draggable={true}
     >
-      <EventList ref={this.eventListRef}/>
+      <EventList ref={this.eventListRef} textEditorRef={this.state.textEditorRef}/>
     </Stage>
 
   )

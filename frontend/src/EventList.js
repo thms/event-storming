@@ -3,13 +3,14 @@ import { render } from 'react-dom';
 import { Layer, Text } from 'react-konva';
 import axios from 'axios';
 import Event from './Event';
-
+import Editor from './Editor';
 class EventList extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      events: []
+      events: [],
+      textEditorRef: props.textEditorRef
     }
   }
 
@@ -50,7 +51,7 @@ class EventList extends Component {
         text='add event'
         onClick={this.addEvent}
       />
-      { this.state.events.map(event => <Event key={event._id} event={event} deleteEvent={this.deleteEvent} />) }
+      { this.state.events.map(event => <Event key={event._id} event={event} textEditorRef={this.state.textEditorRef} deleteEvent={this.deleteEvent} />) }
       </Layer>
       );
   }

@@ -19,7 +19,8 @@ class Event extends Component {
       textEditVisible: false,
       textEditX: 0,
       textEditY: 0,
-      textEditRef: React.createRef(),
+      //textEditorRef: React.createRef(),
+      textEditorRef: props.textEditorRef,
       deleteEvent: props.deleteEvent
     }
   }
@@ -42,7 +43,6 @@ class Event extends Component {
     // prevent double click from triggering
     e.cancelBubble=true;
     let stage = e.target.getStage();
-    console.log(stage)
     const absPos = e.target.getAbsolutePosition();
     console.log(absPos)
     this.setState({
@@ -50,7 +50,8 @@ class Event extends Component {
       textEditX: absPos.x + stage.content.offsetLeft,
       textEditY: absPos.y + stage.content.offsetTop + 35
     });
-    this.state.textEditRef.current.focus();
+    //this.state.textEditorRef.current.focus();
+    this.state.textEditorRef.current.show(this)
   };
 
 handleTextEdit = e => {
@@ -64,13 +65,7 @@ handleTextEdit = e => {
     name: e.target.value
   });
 };
-handleTextareaKeyDown = e => {
-  if (e.keyCode === 13 || e.keyCode === 27) {
-    this.setState({
-      textEditVisible: false
-    });
-  }
-};
+
 
   render() {
     return (
@@ -109,21 +104,6 @@ handleTextareaKeyDown = e => {
           height={15}
           onClick={this.handleDelete}
           />
-        <Portal>
-        <textarea
-          ref={this.state.textEditRef}
-          value={this.state.name}
-          style={{
-            display: this.state.textEditVisible ? 'block' : 'none',
-            position: 'absolute',
-            top: this.state.textEditY + 'px',
-            left: this.state.textEditX + 'px',
-            width: '100px'
-          }}
-          onChange={this.handleTextEdit}
-          onKeyDown={this.handleTextareaKeyDown}
-          />
-        </Portal>
       </Group>
     );
   }
