@@ -118,7 +118,7 @@ handleTextareaKeyDown = e => {
             position: 'absolute',
             top: this.state.textEditY + 'px',
             left: this.state.textEditX + 'px',
-            width: '95px'
+            width: '100px'
           }}
           onChange={this.handleTextEdit}
           onKeyDown={this.handleTextareaKeyDown}
