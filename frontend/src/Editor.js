@@ -16,14 +16,14 @@ class Editor extends Component {
       ref: React.createRef()
     }
   }
-  // show the editor for a given event
+  // show the editor for a given event and push the text events back to its own handler
   show = (event) => {
     this.setState({
       visible: true,
       x: event.state.textEditX,
       y: event.state.textEditY,
       text: event.state.name,
-      handleTextEdit: props.handleTextEdit
+      handleTextEdit: event.handleTextEdit
     });
   }
 
@@ -41,8 +41,14 @@ class Editor extends Component {
     }
   };
 
+  handleTextEdit = (e) => {
+    this.setState({text: e.target.value});
+    this.state.handleTextEdit(e);
+  }
+
   componentDidUpdate = () => {
     this.state.ref.current.focus();
+    console.log('editor updated')
   }
 
   render() {
@@ -58,7 +64,7 @@ class Editor extends Component {
           left: this.state.x + 'px',
           width: '100px'
         }}
-        onChange={this.state.handleTextEdit}
+        onChange={this.handleTextEdit}
         onKeyDown={this.handleTextareaKeyDown}
         />
       </Portal>
