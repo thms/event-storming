@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { Stage } from 'react-konva';
+import { Stage, Layer, Text } from 'react-konva';
 import EventList from './EventList';
 
 
@@ -57,8 +57,8 @@ render() {
       y={this.state.stageY}
       onDblClick={this.handleStageDblClick}
       draggable={true}
-      >
-        <EventList ref={this.eventListRef}/>
+    >
+      <EventList ref={this.eventListRef}/>
     </Stage>
 
   )

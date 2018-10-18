@@ -39,12 +39,16 @@ class Event extends Component {
   };
 
   handleTextDblClick = e => {
+    // prevent double click from triggering
     e.cancelBubble=true;
+    let stage = e.target.getStage();
+    console.log(stage)
     const absPos = e.target.getAbsolutePosition();
+    console.log(absPos)
     this.setState({
       textEditVisible: true,
-      textEditX: absPos.x,
-      textEditY: absPos.y + 35
+      textEditX: absPos.x + stage.content.offsetLeft,
+      textEditY: absPos.y + stage.content.offsetTop + 35
     });
     this.state.textEditRef.current.focus();
   };
@@ -119,7 +123,6 @@ handleTextareaKeyDown = e => {
           onChange={this.handleTextEdit}
           onKeyDown={this.handleTextareaKeyDown}
           />
-
         </Portal>
       </Group>
     );
