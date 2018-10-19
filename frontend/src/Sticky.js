@@ -1,15 +1,15 @@
+// Base class for a sticky f different resource
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Rect, Text, Group } from 'react-konva';
 import axios from 'axios';
 import Portal from './Portal';
 
-class Event extends Component {
+class Sticky extends Component {
 
   constructor(props) {
     super(props)
     this.state = {
-      color: 'orange',
       x: props.event.xpos,
       y: props.event.ypos,
       name: props.event.name,
@@ -19,15 +19,14 @@ class Event extends Component {
       textEditVisible: false,
       textEditX: 0,
       textEditY: 0,
-      //textEditorRef: React.createRef(),
       textEditorRef: props.textEditorRef,
-      deleteEvent: props.deleteEvent
+      deleteCallback: props.deleteCallback
     }
   }
   // at the end of dragging, update server side with the new coordinates
   //
   handleDragEnd = e => {
-    axios.put(`http://localhost:3000/events/${this.state.id}`,
+    axios.put(`${this.state.baseUrl}${this.state.id}`,
     {
       xpos: this.state.x + e.evt.dragEndNode.attrs.x,
       ypos: this.state.y + e.evt.dragEndNode.attrs.y
@@ -36,7 +35,7 @@ class Event extends Component {
   )}
 
   handleDelete = e => {
-    this.state.deleteEvent(this.state.id)
+    this.state.deleteCallback(this.state.id)
   };
 
   handleTextDblClick = e => {
@@ -50,12 +49,11 @@ class Event extends Component {
       textEditX: absPos.x + stage.content.offsetLeft,
       textEditY: absPos.y + stage.content.offsetTop + 35
     });
-    //this.state.textEditorRef.current.focus();
     this.state.textEditorRef.current.show(this)
   };
 
 handleTextEdit = e => {
-  axios.put(`http://localhost:3000/events/${this.state.id}`,
+  axios.put(`${this.state.baseUrl}${this.state.id}`,
     {
       name: e.target.value,
     },
@@ -109,4 +107,4 @@ handleTextEdit = e => {
   }
 }
 
-export default Event;
+export default Sticky;

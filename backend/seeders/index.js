@@ -15,11 +15,12 @@ seeder.connect(config.connection, function() {
   // Load Mongoose models
   seeder.loadModels([
     'models/event.js',
-    'models/policy.js'
+    'models/policy.js',
+    'models/actor.js'
   ]);
 
   // Clear specified collections
-  seeder.clearModels(['Event', 'Policy'], function() {
+  seeder.clearModels(['Event', 'Policy', 'Actor'], function() {
 
     // Callback to populate DB once collections have been cleared
     seeder.populateModels(data, function() {
@@ -56,18 +57,34 @@ var data = [
         ]
     },
     {
-    model: 'Policy',
-    documents: [
-      {
-        name:'score loan',
-        xpos: 100,
-        ypos: 300
-      },
-      {
-        name: 'payout loan',
-        xpos: 400,
-        ypos: 300
-      }
-    ]
-  }
+      model: 'Policy',
+      documents: [
+        {
+          name:'score loan',
+          xpos: 100,
+          ypos: 300
+        },
+        {
+          name: 'payout loan',
+          xpos: 400,
+          ypos: 300
+        }
+      ]
+    },
+    {
+      model: 'Actor',
+      documents: [
+        {
+          name:'borrower',
+          xpos: 200,
+          ypos: 500
+        },
+        {
+          name: 'mike',
+          xpos: 400,
+          ypos: 300
+        }
+      ]
+    }
+
 ];

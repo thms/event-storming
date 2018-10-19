@@ -1,24 +1,24 @@
-const Policy = require('../models/policy');
+const Actor = require('../models/actor');
 
 exports.list = function (req, res, next ) {
-  Policy.find({},function (err, policies) {
+  Actor.find({},function (err, actors) {
         if (err) return next(err);
         res.header('Access-Control-Allow-Origin', '*')
-        res.send(policies);
+        res.send(actors);
     })
 
 };
 
 exports.show = function (req, res, next ) {
-  Policy.findById(req.params.id, function (err, policy) {
+  Actor.findById(req.params.id, function (err, actor) {
         if (err) return next(err);
         res.header('Access-Control-Allow-Origin', '*')
-        res.send(policy);
+        res.send(actor);
     })
 };
 
 exports.create = function (req, res, next) {
-    let policy = new Policy(
+    let actor = new Actor(
         {
             name: req.body.name,
             xpos: req.body.xpos,
@@ -26,25 +26,25 @@ exports.create = function (req, res, next) {
         }
     );
 
-    policy.save(function (err) {
+    actor.save(function (err) {
         if (err) {
             return next(err);
         }
         res.header('Access-Control-Allow-Origin', '*')
-        res.json(policy)
+        res.json(actor)
     })
 };
 
 exports.update = function (req, res, next) {
-    Policy.findByIdAndUpdate(req.params.id, {$set: req.body}, function (err, policy) {
+    Actor.findByIdAndUpdate(req.params.id, {$set: req.body}, function (err, actor) {
         if (err) return next(err);
         res.header('Access-Control-Allow-Origin', '*')
-        res.json(policy);
+        res.send('Actor udpated.');
     });
 };
 
 exports.delete = function (req, res, next ) {
-  Policy.findByIdAndRemove(req.params.id, function (err) {
+  Actor.findByIdAndRemove(req.params.id, function (err) {
         if (err) return next(err);
         res.header('Access-Control-Allow-Origin', '*')
         res.send('Deleted successfully!');
