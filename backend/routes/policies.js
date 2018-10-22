@@ -2,12 +2,12 @@ const express = require('express');
 const router = express.Router();
 
 // Require the controllers WHICH WE DID NOT CREATE YET!!
-const policiesController = require('../controllers/policies');
+const controller = require('../controllers/policies');
 
-router.get('/', policiesController.list);
-router.get('/:id', policiesController.show);
-router.post('/', policiesController.create);
-router.put('/:id', policiesController.update);
-router.delete('/:id', policiesController.delete);
+router.get('/', controller.list);
+router.get('/:id', controller.show);
+router.post('/', controller.create);
+router.put('/:id', controller.update);
+router.delete('/:id', controller.delete);
 
 module.exports = router;

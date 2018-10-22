@@ -5,8 +5,11 @@ import axios from 'axios';
 import Event from './Event';
 import Policy from './Policy';
 import Actor from './Actor';
+import Command from './Command';
 import Editor from './Editor';
 class EventList extends Component {
+
+  STICKIES = ['events', 'actors', 'commands', 'policies'];
 
   constructor(props) {
     super(props)
@@ -14,102 +17,77 @@ class EventList extends Component {
       events: [],
       policies: [],
       actors: [],
+      commands: [],
       textEditorRef: props.textEditorRef
     }
   }
 
   componentDidMount = () => {
     // get the events from the backend
-    axios.get('http://localhost:3000/events', { crossdomain: true })
-    .then(res => {
-      this.setState({events: res.data})
+    this.STICKIES.forEach(sticky => {
+      axios.get(`http://localhost:3000/${sticky}`, { crossdomain: true })
+      .then(res => {
+        this.setState({[sticky]: res.data})
+      })
     })
-    axios.get('http://localhost:3000/policies', { crossdomain: true })
-    .then(res => {
-      this.setState({policies: res.data})
-    })
-    axios.get('http://localhost:3000/actors', { crossdomain: true })
-    .then(res => {
-      this.setState({actors: res.data})
+  }
+
+  addSticky = (e, x = 100, y = 100, resourcePlural) => {
+    axios.post(`http://localhost:3000/${resourcePlural}`, {
+        name: `new ${resourcePlural}`,
+        xpos: x,
+        ypos: y
+      },
+      { crossdomain: true }
+    ).then(res => {
+      this.setState({[resourcePlural]: [...this.state[resourcePlural], res.data]})
     })
   }
 
   addEvent = (e, x = 100, y = 100) => {
-    axios.post('http://localhost:3000/events', {
-        name: 'new event',
-        xpos: x,
-        ypos: y
-    },
-    { crossdomain: true }
-  ).then(res => {
-    this.setState({events: [...this.state.events, res.data]})
-  })
+    this.addSticky( e, x, y, 'events');
   }
-
   addPolicy = (e, x = 100, y = 100) => {
-    axios.post('http://localhost:3000/policies', {
-        name: 'new policy',
-        xpos: x,
-        ypos: y
-    },
-    { crossdomain: true }
-  ).then(res => {
-    this.setState({policies: [...this.state.policies, res.data]})
-  })
+    this.addSticky( e, x, y, 'policies');
   }
   addActor = (e, x = 100, y = 100) => {
-    axios.post('http://localhost:3000/actors', {
-        name: 'new actor',
-        xpos: x,
-        ypos: y
-    },
-    { crossdomain: true }
-  ).then(res => {
-    this.setState({actors: [...this.state.actors, res.data]})
-  })
+    this.addSticky( e, x, y, 'actors');
+  }
+  addCommand = (e, x = 100, y = 100) => {
+    this.addSticky( e, x, y, 'commands');
   }
 
-  deleteEvent = (eventId) => {
-    axios.delete(`http://localhost:3000/events/${eventId}`);
-    let remainingEvents = this.state.events.filter((event) => event._id != eventId )
-    this.setState({events: remainingEvents})
-  }
-
-  deletePolicy = (policyId) => {
-    axios.delete(`http://localhost:3000/policies/${policyId}`);
-    let remainingPolicies = this.state.policies.filter((policy) => policy._id != policyId )
-    this.setState({policies: remainingPolicies})
-  }
-  deleteActor = (actorId) => {
-    axios.delete(`http://localhost:3000/actors/${actorId}`);
-    let remainingActors = this.state.actors.filter((actor) => actor._id != actorId )
-    this.setState({actors: remainingActors})
+  deleteSticky = (id, resourcePlural) => {
+    axios.delete(`http://localhost:3000/${resourcePlural}/${id}`);
+    let remainingItems = this.state[resourcePlural].filter((item) => item._id != id )
+    this.setState({[resourcePlural]: remainingItems})
   }
 
   render() {
     return (
       <Layer>
-      <Text
-        x={20}
-        y={40}
-        width={50}
-        height={25}
-        text='add event'
-        onClick={this.addEvent}
-      />
-      <Text
-        x={80}
-        y={40}
-        width={50}
-        height={25}
-        text='add policy'
-        onClick={this.addPolicy}
-      />
-      { this.state.events.map(event => <Event key={event._id} event={event} textEditorRef={this.state.textEditorRef} deleteEvent={this.deleteEvent} />) }
-      { this.state.policies.map(policy => <Policy key={policy._id} event={policy} textEditorRef={this.state.textEditorRef} deleteCallback={this.deletePolicy} />) }
-      { this.state.actors.map(actor => <Actor key={actor._id} event={actor} textEditorRef={this.state.textEditorRef} deleteCallback={this.deleteActor} />) }
+        <Text
+          x={20}
+          y={40}
+          width={50}
+          height={25}
+          text='add event'
+          onClick={this.addEvent}
+        />
+        <Text
+          x={80}
+          y={40}
+          width={50}
+          height={25}
+          text='add policy'
+          onClick={this.addPolicy}
+        />
+        { this.state.events.map(event => <Event key={event._id} sticky={event} textEditorRef={this.state.textEditorRef} deleteCallback={this.deleteSticky} />) }
+        { this.state.policies.map(policy => <Policy key={policy._id} sticky={policy} textEditorRef={this.state.textEditorRef} deleteCallback={this.deleteSticky} />) }
+        { this.state.actors.map(actor => <Actor key={actor._id} sticky={actor} textEditorRef={this.state.textEditorRef} deleteCallback={this.deleteSticky} />) }
+        { this.state.commands.map(command => <Command key={command._id} sticky={command} textEditorRef={this.state.textEditorRef} deleteCallback={this.deleteSticky} />) }
       </Layer>
-      );
+    );
   }
 }
 

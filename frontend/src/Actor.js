@@ -6,10 +6,14 @@ class Actor extends Sticky {
     super(props)
     this.state = {
       ...this.state,
+      width: 50,
+      height: 70,
       resource: 'actor',
+      resourcePlural: 'actors',
       color: 'LightGoldenrodYellow',
       baseUrl: 'http://localhost:3000/actors/',
     }
+    console.log(this.state)
   }
 
 }

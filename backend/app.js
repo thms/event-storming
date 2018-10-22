@@ -8,6 +8,7 @@ const database = require('./models/index');
 const eventRouter = require('./routes/events');
 const policyRouter = require('./routes/policies');
 const actorRouter = require('./routes/actors');
+const commandRouter = require('./routes/commands');
 
 var app = express();
 app.options('*', cors());
@@ -20,5 +21,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use('/events', eventRouter);
 app.use('/policies', policyRouter);
 app.use('/actors', actorRouter);
+app.use('/commands', commandRouter);
 
 module.exports = app;

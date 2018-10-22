@@ -10,12 +10,12 @@ class Sticky extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      x: props.event.xpos,
-      y: props.event.ypos,
-      name: props.event.name,
+      x: props.sticky.xpos,
+      y: props.sticky.ypos,
+      name: props.sticky.name,
       width: 100,
       height: 100,
-      id: props.event._id,
+      id: props.sticky._id,
       textEditVisible: false,
       textEditX: 0,
       textEditY: 0,
@@ -35,7 +35,7 @@ class Sticky extends Component {
   )}
 
   handleDelete = e => {
-    this.state.deleteCallback(this.state.id)
+    this.state.deleteCallback(this.state.id, this.state.resourcePlural)
   };
 
   handleTextDblClick = e => {
@@ -78,8 +78,8 @@ handleTextEdit = e => {
         <Rect
           x={this.state.x}
           y={this.state.y}
-          width={100}
-          height={100}
+          width={this.state.width}
+          height={this.state.height}
           fill={this.state.color}
           shadowBlur={5}
         />
@@ -90,12 +90,19 @@ handleTextEdit = e => {
           align={'center'}
           verticalAlign={'middle'}
           fill={'black'}
-          width={100}
-          height={100}
+          width={this.state.width}
+          height={this.state.height}
           fontSize={15}
         />
         <Text
-          x={this.state.x + 90}
+          x={this.state.x + 5}
+          y={this.state.y}
+          text={this.state.resource}
+          height={15}
+          />
+
+        <Text
+          x={this.state.x + this.state.width - 10}
           y={this.state.y}
           text={'x'}
           width={15}

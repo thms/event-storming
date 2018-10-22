@@ -7,6 +7,7 @@ class Policy extends Sticky {
     this.state = {
       ...this.state,
       resource: 'policy',
+      resourcePlural: 'policies',
       color: 'LightSteelBlue',
       baseUrl: 'http://localhost:3000/policies/'
     }
