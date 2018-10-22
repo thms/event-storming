@@ -7,7 +7,8 @@ import Policy from './Policy';
 import Actor from './Actor';
 import Command from './Command';
 import Editor from './Editor';
-class EventList extends Component {
+
+class StickyList extends Component {
 
   STICKIES = ['events', 'actors', 'commands', 'policies'];
 
@@ -91,4 +92,4 @@ class EventList extends Component {
   }
 }
 
-export default EventList;
+export default StickyList;

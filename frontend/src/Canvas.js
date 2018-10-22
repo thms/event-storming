@@ -1,14 +1,14 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Stage, Layer, Text } from 'react-konva';
-import EventList from './EventList';
+import StickyList from './StickyList';
 
 
 class Canvas extends React.Component {
 
   constructor(props) {
     super(props)
-    this.eventListRef = React.createRef();
+    this.stickyListRef = React.createRef();
     this.state = {
       stageScale: 1,
       stageX: 0,
@@ -19,8 +19,7 @@ class Canvas extends React.Component {
 
   handleStageDblClick = (e) => {
     console.log(e)
-    // this is fine if the canvas is not panned, but wrong when there is panning
-    this.eventListRef.current.addEvent(null, e.evt.layerX, e.evt.layerY);
+    this.stickyListRef.current.addEvent(null, e.evt.layerX, e.evt.layerY);
   }
 
   handleWheel = e => {
@@ -59,7 +58,7 @@ render() {
       onDblClick={this.handleStageDblClick}
       draggable={true}
     >
-      <EventList ref={this.eventListRef} textEditorRef={this.state.textEditorRef}/>
+      <StickyList ref={this.stickyListRef} textEditorRef={this.state.textEditorRef}/>
     </Stage>
 
   )
