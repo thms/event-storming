@@ -9,6 +9,7 @@ const eventRouter = require('./routes/events');
 const policyRouter = require('./routes/policies');
 const actorRouter = require('./routes/actors');
 const commandRouter = require('./routes/commands');
+const readModelRouter = require('./routes/readModels');
 
 var app = express();
 app.options('*', cors());
@@ -22,5 +23,6 @@ app.use('/events', eventRouter);
 app.use('/policies', policyRouter);
 app.use('/actors', actorRouter);
 app.use('/commands', commandRouter);
+app.use('/readModels', readModelRouter);
 
 module.exports = app;

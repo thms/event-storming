@@ -17,11 +17,12 @@ seeder.connect(config.connection, function() {
     'models/event.js',
     'models/policy.js',
     'models/actor.js',
-    'models/command.js'
+    'models/command.js',
+    'models/readModel.js'
   ]);
 
   // Clear specified collections
-  seeder.clearModels(['Event', 'Policy', 'Actor', 'Command'], function() {
+  seeder.clearModels(['Event', 'Policy', 'Actor', 'Command', 'ReadModel'], function() {
 
     // Callback to populate DB once collections have been cleared
     seeder.populateModels(data, function() {
@@ -97,6 +98,21 @@ var data = [
         },
         {
           name: 'reject loan',
+          xpos: 400,
+          ypos: 300
+        }
+      ]
+    },
+    {
+      model: 'ReadModel',
+      documents: [
+        {
+          name:'loan',
+          xpos: 200,
+          ypos: 500
+        },
+        {
+          name: 'invoice',
           xpos: 400,
           ypos: 300
         }
