@@ -1,0 +1,15 @@
+site_name: Event-Storming
+nav:
+  - Home: 'index.md'
+  - Summary: 'summary.md'
+  - Readme: 'readme.md'
+  - Architecture: 'architecture.md'
+  - Data Model: 'data-model.md'
+  - Business Capabilities: 'business-capabilities.md'
+  - Technical Capabilities: 'technical-capabilities.md'
+  - API: 'api.md'
+plugins:
+  - techdocs-core
+  - 'kroki':
+      inline: true
+      FencePrefix: ''
